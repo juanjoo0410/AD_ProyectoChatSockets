@@ -89,7 +89,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="341" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="260" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnSend" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -102,6 +102,9 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JTextField" name="txtMsj">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMsjActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnSend">
           <Properties>
@@ -120,6 +123,7 @@
           <SubComponents>
             <Component class="javax.swing.JTextArea" name="txtChat">
               <Properties>
+                <Property name="editable" type="boolean" value="false"/>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="dc" green="f6" red="f8" type="rgb"/>
                 </Property>
@@ -225,6 +229,9 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtUsername">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtUsernameActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>

@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package cliente;
+package client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,22 +21,20 @@ public class ChatCliente extends javax.swing.JFrame {
     private String username;
     private String command;
     private PrintWriter out;
+    private boolean status;
+    private DefaultListModel<String> userModel;
 
     public ChatCliente() {
         initComponents();
+        setTitle("Chat Multi-Hilo con Sockets");
         setLocationRelativeTo(null);
+
         pnlLogout.setVisible(false);
         pnlChat.setVisible(false);
-        try (Socket socket = new Socket(HOST, PORT)) {
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "No se estableció la conexión con el servidor.",
-                    "Error de conexión", JOptionPane.WARNING_MESSAGE);
-            dispose(); // Cierra este formulario
-            System.exit(0); // Termina la aplicación
-        }
     }
 
     private void initCliente() {
+        status = true;
         try {
             Socket socket = new Socket(HOST, PORT);
             InputStream inStream = socket.getInputStream();
@@ -60,13 +55,15 @@ public class ChatCliente extends javax.swing.JFrame {
                             txtChat.append(response + "\n");
                         }
                     } catch (IOException ex) {
-                        ex.printStackTrace();
+                        System.err.println("Se perdió la conexión con el servidor.");
                     }
                 }
             });
             listenThread.start();
         } catch (IOException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "No se estableció la conexión con el servidor.",
+                    "Error de conexión", JOptionPane.WARNING_MESSAGE);
+            status = false;
         }
     }
 
@@ -81,6 +78,27 @@ public class ChatCliente extends javax.swing.JFrame {
         } else {
             out.println(command + " " + message);
             txtMsj.setText("");
+        }
+    }
+
+    private void addLogin() {
+        if (!txtUsername.getText().isEmpty()) {
+            txtChat.setText("");
+            command = "LOGIN";
+            username = txtUsername.getText().trim();
+            lbUsername.setText("Bienvenido/a, " + username);
+            txtUsername.setText("");
+
+            initCliente();
+
+            if (status) {
+                sendMessage();
+                pnlLogin.setVisible(false);
+                pnlLogout.setVisible(true);
+                pnlChat.setVisible(true);
+
+                txtUsername.requestFocusInWindow();
+            }
         }
     }
 
@@ -111,6 +129,12 @@ public class ChatCliente extends javax.swing.JFrame {
 
         pnlChat.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Chat"));
 
+        txtMsj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMsjActionPerformed(evt);
+            }
+        });
+
         btnSend.setText("Send");
         btnSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,6 +142,7 @@ public class ChatCliente extends javax.swing.JFrame {
             }
         });
 
+        txtChat.setEditable(false);
         txtChat.setBackground(new java.awt.Color(248, 246, 220));
         txtChat.setColumns(20);
         txtChat.setRows(5);
@@ -141,7 +166,7 @@ public class ChatCliente extends javax.swing.JFrame {
             pnlChatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlChatLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlChatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSend)
@@ -187,6 +212,12 @@ public class ChatCliente extends javax.swing.JFrame {
         btnOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOkActionPerformed(evt);
+            }
+        });
+
+        txtUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsernameActionPerformed(evt);
             }
         });
 
@@ -247,20 +278,7 @@ public class ChatCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
-        if (!txtUsername.getText().isEmpty()) {
-            txtChat.setText("");
-            command = "LOGIN";
-            username = txtUsername.getText().trim();
-            lbUsername.setText("Bienvenido/a, " + username);
-            txtUsername.setText("");
-            pnlLogin.setVisible(false);
-            pnlLogout.setVisible(true);
-            pnlChat.setVisible(true);
-
-            txtUsername.requestFocusInWindow();
-            initCliente();
-            sendMessage();
-        }
+        addLogin();
     }//GEN-LAST:event_btnOkActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -274,6 +292,14 @@ public class ChatCliente extends javax.swing.JFrame {
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
         sendMessage();
     }//GEN-LAST:event_btnSendActionPerformed
+
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
+        addLogin();
+    }//GEN-LAST:event_txtUsernameActionPerformed
+
+    private void txtMsjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMsjActionPerformed
+        sendMessage();        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMsjActionPerformed
 
     /**
      * @param args the command line arguments

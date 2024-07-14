@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.SwingUtilities;
+import server.ChatServer;
 
 /**
  * Un chat room el cual consiste de múltiples chatters.
@@ -33,6 +35,7 @@ public class ChatRoom {
      */
     public void register(String aName) {
         chatterHash.put(aName, new Chatter(aName));
+        updateUserList();
     }
 
     /**
@@ -44,6 +47,7 @@ public class ChatRoom {
     public synchronized void leave(String aName, ChatService service) {
         chatterHash.remove(aName);
         activeService.remove(activeService.indexOf(service));
+        updateUserList();
     }
 
     public void add(ChatService cs) {
@@ -65,5 +69,13 @@ public class ChatRoom {
                 cs.putMessage(requestor + ": " + msg);
             }
         }
+    }
+
+    public List<String> getChatterNames() {
+        return new ArrayList<>(chatterHash.keySet());
+    }
+    
+     private void updateUserList() {
+         SwingUtilities.invokeLater(() -> ChatServer.updateUserList(getChatterNames()));
     }
 }
