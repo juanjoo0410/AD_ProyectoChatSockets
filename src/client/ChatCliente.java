@@ -26,7 +26,7 @@ public class ChatCliente extends javax.swing.JFrame {
 
     public ChatCliente() {
         initComponents();
-        setTitle("CHAT Client");
+        setTitle("CHAT Client (Socket)");
         setLocationRelativeTo(null);
 
         pnlLogout.setVisible(false);

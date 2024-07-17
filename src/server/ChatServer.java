@@ -24,7 +24,7 @@ public class ChatServer extends javax.swing.JFrame {
 
     public ChatServer() {
         initComponents();
-        setTitle("CHAT Server");
+        setTitle("CHAT Server (Socket)");
         setLocationRelativeTo(null);
     }
 
@@ -57,7 +57,6 @@ public class ChatServer extends javax.swing.JFrame {
         SwingUtilities.invokeLater(() -> {
             txtUsers.setText("");
             for (String user : users) {
-                System.out.println("Ejecutado " + user);
                 txtUsers.append(user + "\n");
             }
         });
