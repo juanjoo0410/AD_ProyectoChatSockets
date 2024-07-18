@@ -92,6 +92,7 @@ public class ChatServer extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         btnStart.setBackground(new java.awt.Color(204, 204, 204));
+        btnStart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/start.png"))); // NOI18N
         btnStart.setText("Start");
         btnStart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

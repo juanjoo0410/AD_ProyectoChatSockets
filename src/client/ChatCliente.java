@@ -134,6 +134,7 @@ public class ChatCliente extends javax.swing.JFrame {
         pnlLogin.setBackground(new java.awt.Color(153, 153, 153));
 
         btnOk.setBackground(new java.awt.Color(204, 204, 204));
+        btnOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/login.png"))); // NOI18N
         btnOk.setText("OK");
         btnOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -184,6 +185,7 @@ public class ChatCliente extends javax.swing.JFrame {
         });
 
         btnSend.setBackground(new java.awt.Color(204, 204, 204));
+        btnSend.setIcon(new javax.swing.ImageIcon(getClass().getResource("/send.png"))); // NOI18N
         btnSend.setText("Send");
         btnSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,7 +210,7 @@ public class ChatCliente extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlChatLayout.createSequentialGroup()
                         .addComponent(txtMsj, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSend, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)))
+                        .addComponent(btnSend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlChatLayout.setVerticalGroup(
@@ -229,9 +231,11 @@ public class ChatCliente extends javax.swing.JFrame {
 
         lbUsername.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbUsername.setForeground(new java.awt.Color(0, 255, 255));
+        lbUsername.setIcon(new javax.swing.ImageIcon(getClass().getResource("/user.png"))); // NOI18N
         lbUsername.setText("Bienvenido/a,");
 
         jButton1.setBackground(new java.awt.Color(204, 204, 204));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logout.png"))); // NOI18N
         jButton1.setText("Logout");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
